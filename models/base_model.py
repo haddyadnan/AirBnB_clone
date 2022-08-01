@@ -23,15 +23,21 @@ class BaseModel:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
-    def save(self):
+    def save(self) -> None:
 
         """
-        Public instance methods:
+        Public instance method: save
+        updates the attribute updated_at with the current datetime
         """
 
         self.created_at = datetime.now()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
+
+        """
+        Public instance method: to_dict
+        returns dict containing all keys/values of __dict__ of the instance
+        """
 
         self.__dict__["__class__"] = (self.__class__.__name__,)
         self.__dict__["created_at"] = self.created_at.isoformat()
@@ -40,6 +46,10 @@ class BaseModel:
         return self.__dict__
 
     def __str__(self) -> str:
+
+        """
+        String format
+        """
 
         str_fmt = f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
         return str_fmt

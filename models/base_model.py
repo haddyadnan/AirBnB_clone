@@ -28,7 +28,7 @@ class BaseModel:
             kwargs["created_at"] = datetime.strptime(kwargs["created_at"], fmt)
             kwargs["updated_at"] = datetime.strptime(kwargs["updated_at"], fmt)
             for key, value in kwargs.items():
-                if key is not "__class__":
+                if key != "__class__":
                     self.__dict__[key] = value
         else:
             self.id = str(uuid.uuid4())

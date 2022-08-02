@@ -2,13 +2,13 @@
 """This is the console module
 """
 
-import cmd, sys
+import cmd
 
 
 class HBNBCommand(cmd.Cmd):
     """The console class"""
 
-    prompt = "(HBNB)"
+    prompt = "(HBNB) "
 
     def emptyline(self):
         """Do nothing on emptyline input"""
@@ -22,6 +22,7 @@ class HBNBCommand(cmd.Cmd):
         """Exits the console with ctrl+D"""
         print()
         return True
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

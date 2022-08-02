@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""This is the console module
+
+"""
+This is the console module
 """
 
 import cmd
@@ -16,7 +18,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_quit(self, arg):
-        """Exit from the interpreter"""
+        """Quit command to exit the program"""
         sys.exit(1)
 
     def do_EOF(self, arg):
@@ -38,8 +40,7 @@ class HBNBCommand(cmd.Cmd):
         print("done show")
 
     def do_destroy(self, *args):
-        """Deletes an instance based on the class name and id
-        """
+        """Deletes an instance based on the class name and id"""
         print("done destroy")
 
     def all(self, *args):

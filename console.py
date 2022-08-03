@@ -11,7 +11,6 @@ from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
-    __JSON_file = []
     prompt = "(HBNB) "
 
     def emptyline(self):
@@ -35,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class does not exist **")
         else:
             new_model = BaseModel()
-            HBNBCommand.__JSON_file.append(new_model.id)
+            new_model.save()
             print("{}".format(new_model.id))
 
     def do_show(self, line):

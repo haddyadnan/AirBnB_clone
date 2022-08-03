@@ -6,7 +6,7 @@ This is the console module
 
 import cmd
 import sys
-
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """The console class"""
@@ -28,6 +28,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, *args):
         """Create new instance of BaseModel and prints the id"""
+        # Todo: Value checking
+        new_model = BaseModel()
+        print("{}".format(new_model.id))
         print("done create")
 
     def do_show(self, *args):

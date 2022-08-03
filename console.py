@@ -3,10 +3,11 @@
 """
 This is the console module
 """
-#-----Note that JSON_file is a list i'm using to test out the code-----#
+# -----Note that JSON_file is a list i'm using to test out the code----- #
 import cmd
 import sys
 from models.base_model import BaseModel
+
 
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
@@ -69,9 +70,11 @@ class HBNBCommand(cmd.Cmd):
         updating attribute"""
         print("done update")
 
+
 def args(arg):
     """Convert a line string to an argument tuple"""
     return tuple(arg.split())
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

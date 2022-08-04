@@ -49,8 +49,9 @@ class HBNBCommand(cmd.Cmd):
         """
         arguments = args(line)
         if input_check(arguments):
-            obj = HBNBCommand.all_objs[
-                    "{}.{}".format(arguments[0], arguments[1])]
+            obj = BaseModel(HBNBCommand.all_objs[
+                    "{}.{}".format(arguments[0], arguments[1])])
+            print(type(obj))
             print(obj)
 
     def do_destroy(self, line):
@@ -58,18 +59,35 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id"""
         arguments = args(line)
         if input_check(arguments):
-            print("done destroy")
+            del HBNBCommand.all_objs["{}.{}".format(arguments[0], \
+                    arguments[1])]
+            storage.save()
 
     def do_all(self, line):
         """
         Prints all string representation of all instances based or not \
         on the class name"""
-        print(HBNBCommand.all_objs)
+        arguments = args(line)
+        obj_str = []
+        for obj in HBNBCommand.all_objs.values():
+            obj_str.append(str(obj))
+        if len(arguments) > 0:
+            if arguments[0] != "BaseModel":
+                print("** class doesn't exist **")
+            else:
+                print(obj_str)
+        else:
+            print(obj_str)
 
     def update(self, line):
         """
         Updates an instance based on the class and id by adding or \
         updating attribute"""
+        # TODO:
+        # create BaseModel object from dict at key <class name>.<id>
+        # update <attribute name> of object with <attribute value>
+        # update object at index <class name>.<id> in all_objs dict
+        # call storage.save() to save changes to json file
         print("done update")
 
 

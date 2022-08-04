@@ -67,15 +67,27 @@ class HBNBCommand(cmd.Cmd):
         """
         Prints all string representation of all instances based or not \
         on the class name"""
+        arguments = args(line)
         obj_str = []
         for obj in HBNBCommand.all_objs.values():
             obj_str.append(str(obj))
-        print(obj_str)
+        if len(arguments) > 0:
+            if arguments[0] != "BaseModel":
+                print("** class doesn't exist **")
+            else:
+                print(obj_str)
+        else:
+            print(obj_str)
 
     def update(self, line):
         """
         Updates an instance based on the class and id by adding or \
         updating attribute"""
+        # TODO:
+        # create BaseModel object from dict at key <class name>.<id>
+        # update <attribute name> of object with <attribute value>
+        # update object at index <class name>.<id> in all_objs dict
+        # call storage.save() to save changes to json file
         print("done update")
 
 

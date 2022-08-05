@@ -8,6 +8,12 @@ import cmd
 import sys
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.place import Place
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
@@ -15,14 +21,14 @@ class HBNBCommand(cmd.Cmd):
     all_objs = {}
     prompt = "(HBNB) "
     classes = [
-                "BaseModel",
-                "User",
-                "State",
-                "Place",
-                "City",
-                "amenity",
-                "review"
-                    ]
+            "BaseModel",
+            "User",
+            "State",
+            "Place",
+            "City",
+            "Amenity",
+            "Review"
+            ]
     err_msg = [
                     "** class name missing **",
                     "** class doesn't exist **",
@@ -31,6 +37,19 @@ class HBNBCommand(cmd.Cmd):
                     "** attribute name missing **",
                     "** value missing **"
                     ]
+
+    def __check_attr(self, arg):
+        if not self.__check_id(arg):
+            return False
+        if len(arg) > 2:
+            if len(arg) > 3:
+                return True
+            else:
+                print(HBNBCommand.err_msg[5])
+                return False
+        else:
+            print(HBNBCommand.err_msg[4])
+            return False
 
     def __check_class(self, arg):
         if len(arg) > 0:
@@ -76,12 +95,14 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """Create new instance of BaseModel and prints the id
         """
-        if line == "":
+        if not line:
             print("** class name is missing **")
-        elif line != "BaseModel":
+        elif line not in HBNBCommand.classes:
             print("** class does not exist **")
         else:
-            new_model = BaseModel()
+            for cls_name in HBNBCommand.classes:
+                if cls_name == line:
+                    new_model = eval(cls_name)()
             new_model.save()
             print("{}".format(new_model.id))
 
@@ -93,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
         if self.__check_id(arguments):
             obj = HBNBCommand.all_objs[\
                     "{}.{}".format(arguments[0], arguments[1])]
-            print(type(obj))
+            # print(type(obj))
             print(obj)
 
     def do_destroy(self, line):
@@ -101,8 +122,8 @@ class HBNBCommand(cmd.Cmd):
         Deletes an instance based on the class name and id"""
         arguments = args(line)
         if input_check(arguments):
-            del HBNBCommand.all_objs["{}.{}".format(arguments[0], \
-                    arguments[1])]
+            del HBNBCommand.all_objs["{}.{}".format(arguments[0],
+                arguments[1])]
             storage.save()
 
     def do_all(self, line):
@@ -113,24 +134,43 @@ class HBNBCommand(cmd.Cmd):
         obj_str = []
         for obj in HBNBCommand.all_objs.values():
             obj_str.append(str(obj))
-        if len(arguments) > 0:
-            if arguments[0] != "BaseModel":
-                print("** class doesn't exist **")
+        if arguments:
+            if not self.__check_class(arguments):
+                return
             else:
                 print(obj_str)
         else:
             print(obj_str)
 
-    def update(self, line):
+    def __parse_type(self, arg1, arg2):
+        if arg1 is float:
+            if arg1 is int:
+                return int(arg2)
+            return float(arg2)
+        return arg2
+
+    def do_update(self, line):
         """
         Updates an instance based on the class and id by adding or \
         updating attribute"""
-
         # TODO:
-        # create BaseModel object from dict at key <class name>.<id>
-        # update <attribute name> of object with <attribute value>
-        # update object at index <class name>.<id> in all_objs dict
-        # call storage.save() to save changes to json file
+        #1 all_obj dict already contains objects...
+        #...with index <class name>.<id>
+        #2 convert object to dict using object.to_dict()
+        #3 update <attribute name> of object with <attribute value>
+        #4 update object at index <class name>.<id> in all_objs dict
+        #5 call storage.save() to save changes to json file
+        arguments = args(line)
+        if not self.__check_attr(arguments):
+            return
+        obj = HBNBCommand.all_objs[\
+                "{}.{}".format(arguments[0], arguments[1])]
+        obj_dict = obj.to_dict()
+        val = obj_dict[arguments[2]]
+        val = self.__parse_type(type(val), arguments[3])
+        obj.attr_update(arguments[2], val)
+
+        # Basically: object -> dict -> object -> save_object
         print("done update")
 
 
@@ -138,23 +178,6 @@ def args(arg):
     """
     Convert a line string to an argument tuple"""
     return tuple(arg.split())
-
-
-def input_check(a_tuple) -> bool:
-    if len(a_tuple) > 0:
-        if a_tuple[0] == "BaseModel":
-            if len(a_tuple) > 1:
-                if "{}.{}".format(a_tuple[0], a_tuple[1])\
-                        in HBNBCommand.all_objs.keys():
-                    return True
-                else:
-                    print("** no instance found **")
-            else:
-                print("** instance id missing **")
-        else:
-            print("** class doesn't exist **")
-    else:
-        print("** class name missing **")
 
 
 if __name__ == "__main__":

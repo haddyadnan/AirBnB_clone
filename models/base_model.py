@@ -70,3 +70,12 @@ class BaseModel:
 
         str_fmt = f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
         return str_fmt
+
+    def attr_update(self, key, value):
+        """
+        Updates a BaseModel object
+        """
+
+        if key not in ["id", "created_at", "updated_at"]:
+            self.__dict__[key] = value
+            self.save()

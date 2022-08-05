@@ -14,6 +14,48 @@ class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
     all_objs = {}
     prompt = "(HBNB) "
+    classes = [
+                "BaseModel",
+                "User",
+                "State",
+                "Place",
+                "City",
+                "amenity",
+                "review"
+                    ]
+    err_msg = [
+                    "** class name missing **",
+                    "** class doesn't exist **",
+                    "** instance id missing **",
+                    "** no instance found **",
+                    "** attribute name missing **",
+                    "** value missing **"
+                    ]
+
+    def __check_class(self, arg):
+        if len(arg) > 0:
+            if arg[0] in HBNBCommand.classes:
+                return True
+            else:
+                print(HBNBCommand.err_msg[1])
+                return False
+        else:
+            print(HBNBCommand.err_msg[0])
+            return False
+
+    def __check_id(self, arg):
+        if not self.__check_class(arg):
+            return False
+        if len(arg) > 1:
+            if "{}.{}".format(arg[0], arg[1]) \
+                    in HBNBCommand.all_objs.keys():
+                return True
+            else:
+                print(HBNBCommand.err_msg[2])
+                return False
+        else:
+            print(HBNBCommand.err_msg[3])
+            return False
 
     def emptyline(self):
         """Do nothing on emptyline input
@@ -48,9 +90,9 @@ class HBNBCommand(cmd.Cmd):
                         the class name and id
         """
         arguments = args(line)
-        if input_check(arguments):
-            obj = BaseModel(HBNBCommand.all_objs[
-                    "{}.{}".format(arguments[0], arguments[1])])
+        if self.__check_id(arguments):
+            obj = HBNBCommand.all_objs[\
+                    "{}.{}".format(arguments[0], arguments[1])]
             print(type(obj))
             print(obj)
 
@@ -83,6 +125,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Updates an instance based on the class and id by adding or \
         updating attribute"""
+
         # TODO:
         # create BaseModel object from dict at key <class name>.<id>
         # update <attribute name> of object with <attribute value>

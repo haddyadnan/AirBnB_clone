@@ -30,7 +30,7 @@ class BaseModel:
                 if key in ["created_at", "updated_at"]:
                     value = datetime.strptime(value, fmt)
                 if key != "__class__":
-                    self.__dict__[key] = value
+                    setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()

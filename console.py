@@ -168,7 +168,6 @@ class HBNBCommand(cmd.Cmd):
         obj.attr_update({arguments[2]: val})
 
         # Basically: object -> dict -> object -> save_object
-        print("done update")
 
 
 def args(arg):

@@ -79,7 +79,7 @@ class BaseModel:
         do_not_update = ['id', 'created_at', 'updated_at']
         if attr_dict:
             to_update = {k: v for k, v in attr_dict.items()
-                    if k not in do_not_update}
+                         if k not in do_not_update}
             for k, v in to_update.items():
                 setattr(self, k, v)
             self.save()

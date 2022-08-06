@@ -42,7 +42,7 @@ class FileStorage:
         obj_key = obj.__class__.__name__ + "." + obj.id
 
         FileStorage.__objects[obj_key] = obj
-        ##############DEBUGGING#############
+        # #############DEBUGGING#############
         # print()
         # print("This is the object")
         # print(obj)

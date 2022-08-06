@@ -6,8 +6,7 @@ This module contains the class for persistent file storage
 
 from genericpath import exists
 import json
-from models.base_model import BaseModel
-from models.user import User
+from models import baseModel, city, state, place, amenity, review, user
 
 
 class FileStorage:
@@ -37,7 +36,7 @@ class FileStorage:
         obj_key = obj.__class__.__name__ + "." + obj.id
 
         FileStorage.__objects[obj_key] = obj
-        ##############DEBUGGING#############
+        # #############DEBUGGING#############
         # print()
         # print("This is the object")
         # print(obj)

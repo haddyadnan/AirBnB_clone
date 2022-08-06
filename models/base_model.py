@@ -71,11 +71,15 @@ class BaseModel:
         str_fmt = f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
         return str_fmt
 
-    def attr_update(self, key, value):
+    def attr_update(self, attr_dict=None):
         """
         Updates a BaseModel object
         """
 
-        if key not in ["id", "created_at", "updated_at"]:
-            self.__dict__[key] = value
+        do_not_update = ['id', 'created_at', 'updated_at']
+        if attr_dict:
+            to_update = {k: v for k, v in attr_dict.items()
+                    if k not in do_not_update}
+            for k, v in to_update.items():
+                setattr(self, k, v)
             self.save()

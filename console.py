@@ -136,12 +136,16 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(obj_str)
 
-    def __parse_type(self, arg1, arg2):
-        if arg1 is float:
-            if arg1 is int:
-                return int(arg2)
-            return float(arg2)
-        return arg2
+    def __parse_type(self, arg):
+        try:
+            arg = float(arg)
+            try:
+                arg = int(arg)
+                return arg
+            except:
+                return float(arg)
+        except:
+            return str(arg)
 
     def do_update(self, line):
         """
@@ -159,11 +163,9 @@ class HBNBCommand(cmd.Cmd):
             return
         obj = HBNBCommand.all_objs[
                 "{}.{}".format(arguments[0], arguments[1])]
-        obj_dict = obj.to_dict()
-        if arguments[2] in obj.to_dict:
-            val = obj_dict[arguments[2]]
-            val = self.__parse_type(type(val), arguments[3])
-            obj.attr_update(arguments[2], val)
+        val = arguments[3].strip('"')
+        val = self.__parse_type(val)
+        obj.attr_update({arguments[2]: val})
 
         # Basically: object -> dict -> object -> save_object
         print("done update")

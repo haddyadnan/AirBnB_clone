@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Deletes an instance based on the class name and id"""
         arguments = args(line)
-        if input_check(arguments):
+        if self.__check_id(arguments):
             del HBNBCommand.all_objs["{}.{}".format(arguments[0],
                 arguments[1])]
             storage.save()
@@ -138,6 +138,10 @@ class HBNBCommand(cmd.Cmd):
             if not self.__check_class(arguments):
                 return
             else:
+                obj_str = []
+                for key, obj in HBNBCommand.all_objs.items():
+                    if arguments[0] == key.split(".")[0]:
+                        obj_str.append(str(obj))
                 print(obj_str)
         else:
             print(obj_str)
@@ -166,9 +170,10 @@ class HBNBCommand(cmd.Cmd):
         obj = HBNBCommand.all_objs[\
                 "{}.{}".format(arguments[0], arguments[1])]
         obj_dict = obj.to_dict()
-        val = obj_dict[arguments[2]]
-        val = self.__parse_type(type(val), arguments[3])
-        obj.attr_update(arguments[2], val)
+        if arguments[2] in obj.to_dict:
+            val = obj_dict[arguments[2]]
+            val = self.__parse_type(type(val), arguments[3])
+            obj.attr_update(arguments[2], val)
 
         # Basically: object -> dict -> object -> save_object
         print("done update")

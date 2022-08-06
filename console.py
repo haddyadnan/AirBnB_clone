@@ -3,31 +3,24 @@
 """
 This is the console module
 """
-# -----Note that JSON_file is a list i'm using to test out the code----- #
 import cmd
-from models.base_model import BaseModel
+from models import base_model, user, state, place, city, amenity, review
 from models import storage
-from models.user import User
-from models.state import State
-from models.place import Place
-from models.city import City
-from models.amenity import Amenity
-from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
     all_objs = {}
     prompt = "(HBNB) "
-    classes = [
-            "BaseModel",
-            "User",
-            "State",
-            "Place",
-            "City",
-            "Amenity",
-            "Review"
-            ]
+    classes = {
+            "BaseModel": base_model.BaseModel,
+            "User": user.User,
+            "State": state.State,
+            "Place": place.Place,
+            "City": city.City,
+            "Amenity": amenity.Amenity,
+            "Review": review.Review
+            }
     err_msg = [
                     "** class name missing **",
                     "** class doesn't exist **",
@@ -101,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             for cls_name in HBNBCommand.classes:
                 if cls_name == line:
-                    new_model = eval(cls_name)()
+                    new_model = HBNBCommand.classes[cls_name]()
             new_model.save()
             print("{}".format(new_model.id))
 

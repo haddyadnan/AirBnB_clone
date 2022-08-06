@@ -5,7 +5,6 @@ This is the console module
 """
 # -----Note that JSON_file is a list i'm using to test out the code----- #
 import cmd
-import sys
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -84,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, line):
         """Quit command to exit the program
         """
-        sys.exit(1)
+        return True
 
     def do_EOF(self, line):
         """Exits the console with ctrl+D

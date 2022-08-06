@@ -142,9 +142,9 @@ class HBNBCommand(cmd.Cmd):
             try:
                 arg = int(arg)
                 return arg
-            except:
+            except Exception:
                 return float(arg)
-        except:
+        except Exception:
             return str(arg)
 
     def do_update(self, line):

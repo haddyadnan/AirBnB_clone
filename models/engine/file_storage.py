@@ -6,13 +6,7 @@ This module contains the class for persistent file storage
 
 from genericpath import exists
 import json
-from models.base_model import BaseModel
-from models.user import User
-from models.city import City
-from models.state import State
-from models.place import Place
-from models.amenity import Amenity
-from models.review import Review
+from models import baseModel, city, state, place, amenity, review, user
 
 
 class FileStorage:

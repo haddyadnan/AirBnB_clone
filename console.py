@@ -111,23 +111,21 @@ class HBNBCommand(cmd.Cmd):
         """
         arguments = args(line)
         if self.__check_id(arguments):
-            obj = HBNBCommand.all_objs[\
+            obj = HBNBCommand.all_objs[
                     "{}.{}".format(arguments[0], arguments[1])]
             # print(type(obj))
             print(obj)
 
     def do_destroy(self, line):
-        """
-        Deletes an instance based on the class name and id"""
+        """Deletes an instance based on the class name and id"""
         arguments = args(line)
         if self.__check_id(arguments):
-            del HBNBCommand.all_objs["{}.{}".format(arguments[0],
-                arguments[1])]
+            del HBNBCommand.all_objs["{}.{}".format(
+                arguments[0], arguments[1])]
             storage.save()
 
     def do_all(self, line):
-        """
-        Prints all string representation of all instances based or not \
+        """Prints all string representation of all instances based or not \
         on the class name"""
         arguments = args(line)
         obj_str = []
@@ -157,16 +155,16 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class and id by adding or \
         updating attribute"""
         # TODO:
-        #1 all_obj dict already contains objects...
-        #...with index <class name>.<id>
-        #2 convert object to dict using object.to_dict()
-        #3 update <attribute name> of object with <attribute value>
-        #4 update object at index <class name>.<id> in all_objs dict
-        #5 call storage.save() to save changes to json file
+        # 1 all_obj dict already contains objects...
+        # ...with index <class name>.<id>
+        # 2 convert object to dict using object.to_dict()
+        # 3 update <attribute name> of object with <attribute value>
+        # 4 update object at index <class name>.<id> in all_objs dict
+        # 5 call storage.save() to save changes to json file
         arguments = args(line)
         if not self.__check_attr(arguments):
             return
-        obj = HBNBCommand.all_objs[\
+        obj = HBNBCommand.all_objs[
                 "{}.{}".format(arguments[0], arguments[1])]
         obj_dict = obj.to_dict()
         if arguments[2] in obj.to_dict:

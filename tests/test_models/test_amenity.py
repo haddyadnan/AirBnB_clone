@@ -12,7 +12,7 @@ import unittest
 class TestAmenityInit(unittest.TestCase):
 
     """
-    Test BaseModel Init
+    Test Amenity Init
     """
 
     def test_init(self):

@@ -12,7 +12,7 @@ import unittest
 class TestPlaceInit(unittest.TestCase):
 
     """
-    Test BaseModel Init
+    Test place Init
     """
 
     def test_init(self):

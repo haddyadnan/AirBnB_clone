@@ -165,11 +165,10 @@ class HBNBCommand(cmd.Cmd):
         """
         try:
             arg = float(arg)
-            try:
-                arg = int(arg)
-                return arg
-            except Exception:
+            if arg - int(arg) > 0:
                 return float(arg)
+            else:
+                return int(arg)
         except Exception:
             return str(arg)
 
@@ -206,6 +205,8 @@ class HBNBCommand(cmd.Cmd):
                 }
         if '(' and ')' in arg:
             arg_list = arg.split('(')
+        else:
+            return
         new_arg = "{} {}".format(command, arg_list[1][:-1])
         for k, func in cmds.items():
             if k == arg_list[0]:
@@ -235,6 +236,11 @@ class HBNBCommand(cmd.Cmd):
         """Usage: Amenity.<command>
         """
         self.__parse_cmd('Amenity', arg)
+
+    def do_Place(self, arg):
+        """Usage: Place.<command>
+        """
+        self.__parse_cmd('Place', arg)
 
     def do_Review(self, arg):
         """Usage: Review.<command>

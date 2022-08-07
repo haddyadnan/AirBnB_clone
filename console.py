@@ -21,6 +21,9 @@ class HBNBCommand(cmd.Cmd):
             "Amenity": amenity.Amenity,
             "Review": review.Review
             }
+    """
+    dictionary of all classes
+    """
     err_msg = [
                     "** class name missing **",
                     "** class doesn't exist **",
@@ -29,8 +32,12 @@ class HBNBCommand(cmd.Cmd):
                     "** attribute name missing **",
                     "** value missing **"
                     ]
+    """list of all error messages
+    """
 
     def __check_attr(self, arg):
+        """Private: checks for attribute
+        """
         if not self.__check_id(arg):
             return False
         if len(arg) > 2:
@@ -44,6 +51,8 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __check_class(self, arg):
+        """Private: checks for class
+        """
         if len(arg) > 0:
             if arg[0] in HBNBCommand.classes:
                 return True
@@ -55,6 +64,9 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __check_id(self, arg):
+        """Private: checks for id
+        """
+        self.__reload()
         if not self.__check_class(arg):
             return False
         if len(arg) > 1:
@@ -67,6 +79,12 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(HBNBCommand.err_msg[3])
             return False
+
+    def __reload(self):
+        """Private: reloads all objects from storage to all_objs dict
+        """
+        storage.reload()
+        HBNBCommand.all_objs = storage.all()
 
     def emptyline(self):
         """Do nothing on emptyline input
@@ -99,9 +117,10 @@ class HBNBCommand(cmd.Cmd):
             print("{}".format(new_model.id))
 
     def do_show(self, line):
-        """Prints the string representation of an instance based on \
-                        the class name and id
+        """Prints the string representation of an
+        instance based on the class name and id
         """
+        self.__reload()
         arguments = args(line)
         if self.__check_id(arguments):
             obj = HBNBCommand.all_objs[
@@ -110,7 +129,9 @@ class HBNBCommand(cmd.Cmd):
             print(obj)
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id"""
+        """Deletes an instance based on the class name and id
+        """
+        self.__relaod()
         arguments = args(line)
         if self.__check_id(arguments):
             del HBNBCommand.all_objs["{}.{}".format(
@@ -118,8 +139,10 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or not \
-        on the class name"""
+        """Prints all string representation of all instances based or not
+        on the class name
+        """
+        self.__reload()
         arguments = args(line)
         obj_str = []
         for obj in HBNBCommand.all_objs.values():
@@ -137,6 +160,8 @@ class HBNBCommand(cmd.Cmd):
             print(obj_str)
 
     def __parse_type(self, arg):
+        """casts update value to appropriate type
+        """
         try:
             arg = float(arg)
             try:
@@ -158,6 +183,7 @@ class HBNBCommand(cmd.Cmd):
         # 3 update <attribute name> of object with <attribute value>
         # 4 update object at index <class name>.<id> in all_objs dict
         # 5 call storage.save() to save changes to json file
+        self.__reload()
         arguments = args(line)
         if not self.__check_attr(arguments):
             return
@@ -177,6 +203,7 @@ def args(arg):
 
 
 if __name__ == "__main__":
-    storage.reload()
-    HBNBCommand.all_objs = storage.all()
+    """
+    main loop
+    """
     HBNBCommand().cmdloop()

@@ -11,7 +11,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
     all_objs = {}
-    prompt = "(HBNB) "
+    prompt = "(hbnb)"
     classes = {
             "BaseModel": base_model.BaseModel,
             "User": user.User,

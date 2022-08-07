@@ -4,7 +4,6 @@
 Unittest for base model
 """
 from genericpath import exists
-from turtle import update
 import unittest
 
 from models.base_model import BaseModel
@@ -38,6 +37,9 @@ class TestBaseInit(unittest.TestCase):
         model = BaseModel()
         self.assertEqual(type(model.updated_at), datetime)
 
+    def test_docs(self):
+        self.assertIsNotNone(BaseModel.__doc__)
+
 
 class TestBaseSave(unittest.TestCase):
     """
@@ -58,6 +60,9 @@ class TestBaseSave(unittest.TestCase):
         update = model.updated_at
         self.assertGreater(update, prev)
 
+    def test_docs(self):
+        self.assertIsNotNone(BaseModel.save.__doc__)
+
 
 class TestBaseTDict(unittest.TestCase):
     """
@@ -67,3 +72,6 @@ class TestBaseTDict(unittest.TestCase):
     def test_dict_dtype(self):
         model = BaseModel()
         self.assertEqual(type(model.to_dict()), dict)
+
+    def test_docs(self):
+        self.assertIsNotNone(BaseModel.to_dict.__doc__)

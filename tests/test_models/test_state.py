@@ -3,3 +3,40 @@
 """
 This module contains test cases for state module
 """
+
+from models.state import State
+from models.base_model import BaseModel
+import unittest
+
+
+class TestStateInit(unittest.TestCase):
+
+    """
+    Test State Init
+    """
+
+    def test_init(self):
+        model = State()
+        self.assertIsInstance(model, State)
+
+    def test_inheritance(self):
+        model = State()
+        self.assertIsInstance(model, BaseModel)
+
+    def test_args(self):
+        model = State()
+        model.name = "home"
+        model.save()
+        self.assertFalse(hasattr(model, "home"))
+
+    def test_docs(self):
+        self.assertIsNotNone(State.__doc__)
+
+    # def test_time(self):
+    #     model = State()
+    #     self.assertEqual(model.created_at, model.updated_at)
+
+    # def test_kwinit1(self):
+    #     model = State()
+    #     model.first_name = "test"
+    #     self.assertEqual(model.first_name, "test")

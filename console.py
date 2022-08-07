@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
         instance based on the class name and id
         """
         self.__reload()
-        arguments = args(line)
+        arguments = self.args(line)
         if self.__check_id(arguments):
             obj = HBNBCommand.all_objs[
                     "{}.{}".format(arguments[0], arguments[1])]
@@ -132,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an instance based on the class name and id
         """
         self.__relaod()
-        arguments = args(line)
+        arguments = self.args(line)
         if self.__check_id(arguments):
             del HBNBCommand.all_objs["{}.{}".format(
                 arguments[0], arguments[1])]
@@ -143,7 +143,7 @@ class HBNBCommand(cmd.Cmd):
         on the class name
         """
         self.__reload()
-        arguments = args(line)
+        arguments = self.args(line)
         obj_str = []
         for obj in HBNBCommand.all_objs.values():
             obj_str.append(str(obj))
@@ -184,7 +184,7 @@ class HBNBCommand(cmd.Cmd):
         # 4 update object at index <class name>.<id> in all_objs dict
         # 5 call storage.save() to save changes to json file
         self.__reload()
-        arguments = args(line)
+        arguments = self.args(line)
         if not self.__check_attr(arguments):
             return
         obj = HBNBCommand.all_objs[
@@ -195,14 +195,14 @@ class HBNBCommand(cmd.Cmd):
 
         # Basically: object -> dict -> object -> save_object
 
+    def args(self, arg):
+        """
+        Convert a line string to an argument tuplei
+        """
+        return tuple(arg.split())
 
-def args(arg):
-    """
-    Convert a line string to an argument tuple"""
-    return tuple(arg.split())
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     """
     main loop
     """

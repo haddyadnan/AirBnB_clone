@@ -27,8 +27,8 @@ class HBNBCommand(cmd.Cmd):
     err_msg = [
                     "** class name missing **",
                     "** class doesn't exist **",
-                    "** instance id missing **",
                     "** no instance found **",
+                    "** instance id missing **",
                     "** attribute name missing **",
                     "** value missing **"
                     ]

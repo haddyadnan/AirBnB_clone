@@ -30,7 +30,7 @@ class BaseModel:
                 if key in ["created_at", "updated_at"]:
                     value = datetime.strptime(value, fmt)
                 if key != "__class__":
-                    self.__dict__[key] = value
+                    setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
@@ -70,3 +70,16 @@ class BaseModel:
 
         str_fmt = f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
         return str_fmt
+
+    def attr_update(self, attr_dict=None):
+        """
+        Updates a BaseModel object
+        """
+
+        do_not_update = ['id', 'created_at', 'updated_at']
+        if attr_dict:
+            to_update = {k: v for k, v in attr_dict.items()
+                         if k not in do_not_update}
+            for k, v in to_update.items():
+                setattr(self, k, v)
+            self.save()

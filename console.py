@@ -10,34 +10,34 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
+
     all_objs = {}
     prompt = "(hbnb)"
     classes = {
-            "BaseModel": base_model.BaseModel,
-            "User": user.User,
-            "State": state.State,
-            "Place": place.Place,
-            "City": city.City,
-            "Amenity": amenity.Amenity,
-            "Review": review.Review
-            }
+        "BaseModel": base_model.BaseModel,
+        "User": user.User,
+        "State": state.State,
+        "Place": place.Place,
+        "City": city.City,
+        "Amenity": amenity.Amenity,
+        "Review": review.Review,
+    }
     """
     dictionary of all classes
     """
     err_msg = [
-                    "** class name missing **",
-                    "** class doesn't exist **",
-                    "** no instance found **",
-                    "** instance id missing **",
-                    "** attribute name missing **",
-                    "** value missing **"
-                    ]
+        "** class name missing **",
+        "** class doesn't exist **",
+        "** no instance found **",
+        "** instance id missing **",
+        "** attribute name missing **",
+        "** value missing **",
+    ]
     """list of all error messages
     """
 
     def __check_attr(self, arg):
-        """Private: checks for attribute
-        """
+        """Private: checks for attribute"""
         if not self.__check_id(arg):
             return False
         if len(arg) > 2:
@@ -51,8 +51,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __check_class(self, arg):
-        """Private: checks for class
-        """
+        """Private: checks for class"""
         if len(arg) > 0:
             if arg[0] in HBNBCommand.classes:
                 return True
@@ -64,14 +63,12 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __check_id(self, arg):
-        """Private: checks for id
-        """
+        """Private: checks for id"""
         self.__reload()
         if not self.__check_class(arg):
             return False
         if len(arg) > 1:
-            if "{}.{}".format(arg[0], arg[1]) \
-                    in HBNBCommand.all_objs.keys():
+            if "{}.{}".format(arg[0], arg[1]) in HBNBCommand.all_objs.keys():
                 return True
             else:
                 print(HBNBCommand.err_msg[2])
@@ -81,30 +78,25 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __reload(self):
-        """Private: reloads all objects from storage to all_objs dict
-        """
+        """Private: reloads all objects from storage to all_objs dict"""
         storage.reload()
         HBNBCommand.all_objs = storage.all()
 
     def emptyline(self):
-        """Do nothing on emptyline input
-        """
+        """Do nothing on emptyline input"""
         pass
 
     def do_quit(self, line):
-        """Quit command to exit the program
-        """
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, line):
-        """Exits the console with ctrl+D
-        """
+        """Exits the console with ctrl+D"""
         print()
         return True
 
     def do_create(self, line):
-        """Create new instance of BaseModel and prints the id
-        """
+        """Create new instance of BaseModel and prints the id"""
         if not line:
             print("** class name is missing **")
         elif line not in HBNBCommand.classes:
@@ -123,19 +115,16 @@ class HBNBCommand(cmd.Cmd):
         self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):
-            obj = HBNBCommand.all_objs[
-                    "{}.{}".format(arguments[0], arguments[1])]
+            obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
             # print(type(obj))
             print(obj)
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
-        """
-        self.__relaod()
+        """Deletes an instance based on the class name and id"""
+        self.__reload()  # check bug source
         arguments = self.args(line)
         if self.__check_id(arguments):
-            del HBNBCommand.all_objs["{}.{}".format(
-                arguments[0], arguments[1])]
+            del HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
             storage.save()
 
     def do_all(self, line):
@@ -160,8 +149,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj_str)
 
     def __parse_type(self, arg):
-        """casts update value to appropriate type
-        """
+        """casts update value to appropriate type"""
         try:
             arg = float(arg)
             try:
@@ -187,8 +175,7 @@ class HBNBCommand(cmd.Cmd):
         arguments = self.args(line)
         if not self.__check_attr(arguments):
             return
-        obj = HBNBCommand.all_objs[
-                "{}.{}".format(arguments[0], arguments[1])]
+        obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
         val = arguments[3].strip('"')
         val = self.__parse_type(val)
         obj.attr_update({arguments[2]: val})
@@ -202,7 +189,7 @@ class HBNBCommand(cmd.Cmd):
         return tuple(arg.split())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     """
     main loop
     """

@@ -6,38 +6,47 @@ This is the console module
 import cmd
 from models import base_model, user, state, place, city, amenity, review
 from models import storage
+import re
+
+
+methods = [
+    "update",
+    "all",
+    "destroy",
+    "show",
+]
 
 
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
+
     all_objs = {}
-    prompt = "(hbnb) "
+    prompt = "(hbnb) "  # space after bracket to note result
     classes = {
-            "BaseModel": base_model.BaseModel,
-            "User": user.User,
-            "State": state.State,
-            "Place": place.Place,
-            "City": city.City,
-            "Amenity": amenity.Amenity,
-            "Review": review.Review
-            }
+        "BaseModel": base_model.BaseModel,
+        "User": user.User,
+        "State": state.State,
+        "Place": place.Place,
+        "City": city.City,
+        "Amenity": amenity.Amenity,
+        "Review": review.Review,
+    }
     """
     dictionary of all classes
     """
     err_msg = [
-                    "** class name missing **",
-                    "** class doesn't exist **",
-                    "** no instance found **",
-                    "** instance id missing **",
-                    "** attribute name missing **",
-                    "** value missing **"
-                    ]
+        "** class name missing **",
+        "** class doesn't exist **",
+        "** no instance found **",
+        "** instance id missing **",
+        "** attribute name missing **",
+        "** value missing **",
+    ]
     """list of all error messages
     """
 
     def __check_attr(self, arg):
-        """Private: checks for attribute
-        """
+        """Private: checks for attribute"""
         if not self.__check_id(arg):
             return False
         if len(arg) > 2:
@@ -51,8 +60,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __check_class(self, arg):
-        """Private: checks for class
-        """
+        """Private: checks for class"""
         if len(arg) > 0:
             if arg[0] in HBNBCommand.classes:
                 return True
@@ -64,14 +72,13 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __check_id(self, arg):
-        """Private: checks for id
-        """
+        """Private: checks for id"""
         self.__reload()
         if not self.__check_class(arg):
             return False
         if len(arg) > 1:
-            if "{}.{}".format(arg[0], arg[1]) \
-                    in HBNBCommand.all_objs.keys():
+            if "{}.{}".format(arg[0], arg[1]) in HBNBCommand.all_objs.keys():
+                # print(f"second: {arg[0]}.{arg[1]}")
                 return True
             else:
                 print(HBNBCommand.err_msg[2])
@@ -81,24 +88,20 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def __reload(self):
-        """Private: reloads all objects from storage to all_objs dict
-        """
+        """Private: reloads all objects from storage to all_objs dict"""
         storage.reload()
         HBNBCommand.all_objs = storage.all()
 
     def emptyline(self):
-        """Do nothing on emptyline input
-        """
+        """Do nothing on emptyline input"""
         pass
 
     def do_quit(self, line):
-        """Quit command to exit the program
-        """
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, line):
-        """Exits the console with ctrl+D
-        """
+        """Exits the console with ctrl+D"""
         print()
         return True
 
@@ -123,20 +126,27 @@ class HBNBCommand(cmd.Cmd):
         """
         self.__reload()
         arguments = self.args(line)
+        # print("here: ", arguments[0], arguments[1])
         if self.__check_id(arguments):
-            obj = HBNBCommand.all_objs[
-                    "{}.{}".format(arguments[0], arguments[1])]
+            # replace .format with f-string to meet pycodestyle
+            obj = HBNBCommand.all_objs[f"{arguments[0]}.{arguments[1]}"]
+            # .format(arguments[0], arguments[1])]
             # print(type(obj))
             print(obj)
 
     def do_destroy(self, line):
+<<<<<<< HEAD
         """Deletes an instance based on the class name and id
         """
+=======
+        """Deletes an instance based on the class name and id"""
+>>>>>>> 340ca1056d888d9e28b71defb0448f1d9481fc9e
         self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):
-            del HBNBCommand.all_objs["{}.{}".format(
-                arguments[0], arguments[1])]
+            # replace .format with f-string pycodestyle
+            del HBNBCommand.all_objs[f"{arguments[0]}.{arguments[1]}"]  #
+            # .format(arguments[0], arguments[1])]
             storage.save()
 
     def do_all(self, line):
@@ -161,8 +171,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj_str)
 
     def __parse_type(self, arg):
-        """casts update value to appropriate type
-        """
+        """casts update value to appropriate type"""
         try:
             arg = float(arg)
             if arg - int(arg) > 0:
@@ -185,10 +194,10 @@ class HBNBCommand(cmd.Cmd):
         # 5 call storage.save() to save changes to json file
         self.__reload()
         arguments = self.args(line)
+        # print("here: ", arguments[0], arguments[1], arguments[2], arguments[3])
         if not self.__check_attr(arguments):
             return
-        obj = HBNBCommand.all_objs[
-                "{}.{}".format(arguments[0], arguments[1])]
+        obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
         val = arguments[3].strip('"')
         val = self.__parse_type(val)
         obj.attr_update({arguments[2]: val})
@@ -252,8 +261,38 @@ class HBNBCommand(cmd.Cmd):
         """
         return tuple(arg.split())
 
+    #########################################
+    ###########Checking Default##############
+    #########################################
+    def default(self, line):
+        """
+        print line
+        """
 
-if __name__ == '__main__':
+        # tmp = re.search(r"(^[^\.]*)", line).group(0)
+        if line.split(".")[0] in self.classes.keys():
+
+            obj = line.split(".")[0]
+            # self.do_all(dc)
+
+            # obj = line.split(".")[0]
+            methd = re.search(r"(?<=\.)(.*?)(?=\()", line).group(0)
+            if methd in methods:
+                val = re.search(r"(?<=\()(.*?)(?=\))", line).group(0)
+                # args = "do_" + str(args)
+                # print(args)
+                methd = "do_" + methd
+
+                if any(val):
+                    val = re.sub('"', "", val)
+                    eval(f"self.{methd}")(f"{obj} {val}")
+                else:
+                    eval(f"self.{methd}(obj)")
+        else:
+            print(f"*** Unknown syntax: {line}")
+
+
+if __name__ == "__main__":
     """
     main loop
     """

@@ -6,6 +6,15 @@ This is the console module
 import cmd
 from models import base_model, user, state, place, city, amenity, review
 from models import storage
+import re
+
+
+methods = [
+    "update",
+    "all",
+    "destroy",
+    "show",
+]
 
 
 class HBNBCommand(cmd.Cmd):
@@ -69,6 +78,7 @@ class HBNBCommand(cmd.Cmd):
             return False
         if len(arg) > 1:
             if "{}.{}".format(arg[0], arg[1]) in HBNBCommand.all_objs.keys():
+                # print(f"second: {arg[0]}.{arg[1]}")
                 return True
             else:
                 print(HBNBCommand.err_msg[2])
@@ -114,6 +124,7 @@ class HBNBCommand(cmd.Cmd):
         """
         self.__reload()
         arguments = self.args(line)
+        # print("here: ", arguments[0], arguments[1])
         if self.__check_id(arguments):
             # replace .format with f-string to meet pycodestyle
             obj = HBNBCommand.all_objs[f"{arguments[0]}.{arguments[1]}"]
@@ -177,6 +188,7 @@ class HBNBCommand(cmd.Cmd):
         # 5 call storage.save() to save changes to json file
         self.__reload()
         arguments = self.args(line)
+        # print("here: ", arguments[0], arguments[1], arguments[2], arguments[3])
         if not self.__check_attr(arguments):
             return
         obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
@@ -191,6 +203,36 @@ class HBNBCommand(cmd.Cmd):
         Convert a line string to an argument tuplei
         """
         return tuple(arg.split())
+
+    #########################################
+    ###########Checking Default##############
+    #########################################
+    def default(self, line):
+        """
+        print line
+        """
+
+        # tmp = re.search(r"(^[^\.]*)", line).group(0)
+        if line.split(".")[0] in self.classes.keys():
+
+            obj = line.split(".")[0]
+            # self.do_all(dc)
+
+            # obj = line.split(".")[0]
+            methd = re.search(r"(?<=\.)(.*?)(?=\()", line).group(0)
+            if methd in methods:
+                val = re.search(r"(?<=\()(.*?)(?=\))", line).group(0)
+                # args = "do_" + str(args)
+                # print(args)
+                methd = "do_" + methd
+
+                if any(val):
+                    val = re.sub('"', "", val)
+                    eval(f"self.{methd}")(f"{obj} {val}")
+                else:
+                    eval(f"self.{methd}(obj)")
+        else:
+            print(f"*** Unknown syntax: {line}")
 
 
 if __name__ == "__main__":

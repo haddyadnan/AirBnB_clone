@@ -12,7 +12,7 @@ class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
 
     all_objs = {}
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "  # space after bracket to note result
     classes = {
         "BaseModel": base_model.BaseModel,
         "User": user.User,
@@ -115,16 +115,20 @@ class HBNBCommand(cmd.Cmd):
         self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):
-            obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
+            # replace .format with f-string to meet pycodestyle
+            obj = HBNBCommand.all_objs[f"{arguments[0]}.{arguments[1]}"]
+            # .format(arguments[0], arguments[1])]
             # print(type(obj))
             print(obj)
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
-        self.__reload()  # check bug source
+        self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):
-            del HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
+            # replace .format with f-string pycodestyle
+            del HBNBCommand.all_objs[f"{arguments[0]}.{arguments[1]}"]  #
+            # .format(arguments[0], arguments[1])]
             storage.save()
 
     def do_all(self, line):

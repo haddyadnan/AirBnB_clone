@@ -11,7 +11,7 @@ from models import storage
 class HBNBCommand(cmd.Cmd):
     """The HBNBCommand class"""
     all_objs = {}
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     classes = {
             "BaseModel": base_model.BaseModel,
             "User": user.User,
@@ -105,6 +105,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """Create new instance of BaseModel and prints the id
         """
+        line = line.strip()
         if not line:
             print("** class name is missing **")
         elif line not in HBNBCommand.classes:
@@ -131,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
         """
-        self.__relaod()
+        self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):
             del HBNBCommand.all_objs["{}.{}".format(
@@ -195,9 +196,53 @@ class HBNBCommand(cmd.Cmd):
 
         # Basically: object -> dict -> object -> save_object
 
-    def args(self, arg):
+    def __parse_cmd(self, command, arg):
+        cmds = {
+                '.create': self.do_create,
+                '.show': self.do_show,
+                '.all': self.do_all,
+                '.destroy': self.do_destroy,
+                '.update': self.do_update
+                }
+        if '(' and ')' in arg:
+            arg_list = arg.split('(')
+        new_arg = "{} {}".format(command, arg_list[1][:-1])
+        for k, func in cmds.items():
+            if k == arg_list[0]:
+                func(new_arg)
+
+    def do_BaseModel(self, arg):
+        """Usage: BaseModel.<command>
         """
-        Convert a line string to an argument tuplei
+        self.__parse_cmd('BaseModel', arg)
+
+    def do_User(self, arg):
+        """Usage: User.<command>
+        """
+        self.__parse_cmd('User', arg)
+
+    def do_City(self, arg):
+        """Usage: City.<command>
+        """
+        self.__parse_cmd('City', arg)
+
+    def do_State(self, arg):
+        """Usage: State.<command>
+        """
+        self.__parse_cmd('State', arg)
+
+    def do_Amenity(self, arg):
+        """Usage: Amenity.<command>
+        """
+        self.__parse_cmd('Amenity', arg)
+
+    def do_Review(self, arg):
+        """Usage: Review.<command>
+        """
+        self.__parse_cmd('Review', arg)
+
+    def args(self, arg):
+        """Convert a line string to an argument tuplei
         """
         return tuple(arg.split())
 

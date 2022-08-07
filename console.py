@@ -135,12 +135,8 @@ class HBNBCommand(cmd.Cmd):
             print(obj)
 
     def do_destroy(self, line):
-<<<<<<< HEAD
         """Deletes an instance based on the class name and id
         """
-=======
-        """Deletes an instance based on the class name and id"""
->>>>>>> 340ca1056d888d9e28b71defb0448f1d9481fc9e
         self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):

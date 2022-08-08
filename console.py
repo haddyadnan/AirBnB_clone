@@ -251,11 +251,12 @@ class HBNBCommand(cmd.Cmd):
     #########################################
     # ##########Checking Default##############
     #########################################
-    def default(self, line):
+    
+    # def default(self, line):
         """
         print line
         """
-
+        """
         # tmp = re.search(r"(^[^\.]*)", line).group(0)
         if line.split(".")[0] in self.classes.keys():
 
@@ -277,6 +278,7 @@ class HBNBCommand(cmd.Cmd):
                     eval(f"self.{methd}(obj)")
         else:
             print(f"*** Unknown syntax: {line}")
+            """
 
 
 if __name__ == "__main__":

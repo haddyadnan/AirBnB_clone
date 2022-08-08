@@ -69,7 +69,7 @@ class BaseModel:
         """
 
         str_fmt = f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
-        print(str_fmt)  # checker
+        return str_fmt
 
     def attr_update(self, attr_dict=None):
         """

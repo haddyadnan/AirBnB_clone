@@ -15,10 +15,8 @@ class TestStateInit(unittest.TestCase):
     Test State Init
     """
 
-    @classmethod
     def test_init(self):
         model = State()
-        model.save()
         self.assertIsInstance(model, State)
 
     def test_inheritance(self):

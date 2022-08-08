@@ -27,7 +27,7 @@ class TestReviewInit(unittest.TestCase):
         model = Review()
         model.name = "home"
         model.save()
-        self.assertFalse(hasattr(model, "home"))
+        self.assertEqual(model.name, "home")
 
     def test_docs(self):
         self.assertIsNotNone(Review.__doc__)

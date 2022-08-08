@@ -31,12 +31,3 @@ class TestStateInit(unittest.TestCase):
 
     def test_docs(self):
         self.assertIsNotNone(State.__doc__)
-
-    # def test_time(self):
-    #     model = State()
-    #     self.assertEqual(model.created_at, model.updated_at)
-
-    # def test_kwinit1(self):
-    #     model = State()
-    #     model.first_name = "test"
-    #     self.assertEqual(model.first_name, "test")

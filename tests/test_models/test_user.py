@@ -41,8 +41,10 @@ class TestUserAttr(unittest.TestCase):
     def test_User_email(self):
         user = User()
         user.email = "test"
+        user.save()
         self.assertEqual("test", user.email)
 
+    @classmethod
     def test_User_password(self):
         user = User()
         user.password = "root"

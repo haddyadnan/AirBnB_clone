@@ -27,7 +27,7 @@ class TestPlaceInit(unittest.TestCase):
         model = Place()
         model.name = "home"
         model.save()
-        self.assertFalse(hasattr(model, "home"))
+        self.assertEqual(model.name, "home")
 
     def test_docs(self):
         self.assertIsNotNone(Place.__doc__)

@@ -23,12 +23,11 @@ class TestStateInit(unittest.TestCase):
         model = State()
         self.assertIsInstance(model, BaseModel)
 
-    @classmethod
     def test_args(self):
         model = State()
         model.name = "home"
         model.save()
-        self.assertFalse(hasattr(model, "home"))
+        self.assertEqual(model.name, "home")
 
     def test_docs(self):
         self.assertIsNotNone(State.__doc__)

@@ -10,7 +10,6 @@ import unittest
 
 
 class TestReviewInit(unittest.TestCase):
-
     """
     Test Review Init
     """
@@ -23,11 +22,15 @@ class TestReviewInit(unittest.TestCase):
         model = Review()
         self.assertIsInstance(model, BaseModel)
 
-    def test_args(self):
+    def test_review_attr(self):
         model = Review()
-        model.name = "home"
-        model.save()
-        self.assertEqual(model.name, "home")
+        model.place_id = "id"
+        model.user_id = "user"
+        model.text = "text"
+
+        self.assertEqual("id", model.place_id)
+        self.assertEqual("user", model.user_id)
+        self.assertEqual("text", model.text)
 
     def test_docs(self):
         self.assertIsNotNone(Review.__doc__)

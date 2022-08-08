@@ -12,7 +12,7 @@ import unittest
 class TestBaseInit(unittest.TestCase):
 
     """
-    Test BaseModel Init
+    Test User Init
     """
 
     def test_init(self):
@@ -31,12 +31,3 @@ class TestBaseInit(unittest.TestCase):
 
     def test_docs(self):
         self.assertIsNotNone(User.__doc__)
-
-    # def test_time(self):
-    #     model = User()
-    #     self.assertEqual(model.created_at, model.updated_at)
-
-    # def test_kwinit1(self):
-    #     model = User()
-    #     model.first_name = "test"
-    #     self.assertEqual(model.first_name, "test")

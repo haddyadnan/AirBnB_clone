@@ -12,7 +12,7 @@ import unittest
 class TestReviewInit(unittest.TestCase):
 
     """
-    Test BaseModel Init
+    Test Review Init
     """
 
     def test_init(self):

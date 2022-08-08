@@ -106,8 +106,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, line):
-        """Create new instance of BaseModel and prints the id
-        """
+        """Create new instance of BaseModel and prints the id"""
         line = line.strip()
         if not line:
             print("** class name is missing **")
@@ -135,8 +134,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj)
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
-        """
+        """Deletes an instance based on the class name and id"""
         self.__reload()
         arguments = self.args(line)
         if self.__check_id(arguments):
@@ -190,7 +188,8 @@ class HBNBCommand(cmd.Cmd):
         # 5 call storage.save() to save changes to json file
         self.__reload()
         arguments = self.args(line)
-        # print("here: ", arguments[0], arguments[1], arguments[2], arguments[3])
+        # print("here: ", arguments[0], arguments[1],
+        #  arguments[2], arguments[3])
         if not self.__check_attr(arguments):
             return
         obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
@@ -202,14 +201,14 @@ class HBNBCommand(cmd.Cmd):
 
     def __parse_cmd(self, command, arg):
         cmds = {
-                '.create': self.do_create,
-                '.show': self.do_show,
-                '.all': self.do_all,
-                '.destroy': self.do_destroy,
-                '.update': self.do_update
-                }
-        if '(' and ')' in arg:
-            arg_list = arg.split('(')
+            ".create": self.do_create,
+            ".show": self.do_show,
+            ".all": self.do_all,
+            ".destroy": self.do_destroy,
+            ".update": self.do_update,
+        }
+        if "(" and ")" in arg:
+            arg_list = arg.split("(")
         else:
             return
         new_arg = "{} {}".format(command, arg_list[1][:-1])
@@ -218,47 +217,39 @@ class HBNBCommand(cmd.Cmd):
                 func(new_arg)
 
     def do_BaseModel(self, arg):
-        """Usage: BaseModel.<command>
-        """
-        self.__parse_cmd('BaseModel', arg)
+        """Usage: BaseModel.<command>"""
+        self.__parse_cmd("BaseModel", arg)
 
     def do_User(self, arg):
-        """Usage: User.<command>
-        """
-        self.__parse_cmd('User', arg)
+        """Usage: User.<command>"""
+        self.__parse_cmd("User", arg)
 
     def do_City(self, arg):
-        """Usage: City.<command>
-        """
-        self.__parse_cmd('City', arg)
+        """Usage: City.<command>"""
+        self.__parse_cmd("City", arg)
 
     def do_State(self, arg):
-        """Usage: State.<command>
-        """
-        self.__parse_cmd('State', arg)
+        """Usage: State.<command>"""
+        self.__parse_cmd("State", arg)
 
     def do_Amenity(self, arg):
-        """Usage: Amenity.<command>
-        """
-        self.__parse_cmd('Amenity', arg)
+        """Usage: Amenity.<command>"""
+        self.__parse_cmd("Amenity", arg)
 
     def do_Place(self, arg):
-        """Usage: Place.<command>
-        """
-        self.__parse_cmd('Place', arg)
+        """Usage: Place.<command>"""
+        self.__parse_cmd("Place", arg)
 
     def do_Review(self, arg):
-        """Usage: Review.<command>
-        """
-        self.__parse_cmd('Review', arg)
+        """Usage: Review.<command>"""
+        self.__parse_cmd("Review", arg)
 
     def args(self, arg):
-        """Convert a line string to an argument tuplei
-        """
+        """Convert a line string to an argument tuplei"""
         return tuple(arg.split())
 
     #########################################
-    ###########Checking Default##############
+    # ##########Checking Default##############
     #########################################
     
     # def default(self, line):

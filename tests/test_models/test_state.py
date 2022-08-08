@@ -23,6 +23,7 @@ class TestStateInit(unittest.TestCase):
         model = State()
         self.assertIsInstance(model, BaseModel)
 
+    @classmethod
     def test_args(self):
         model = State()
         model.name = "home"

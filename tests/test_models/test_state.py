@@ -15,6 +15,7 @@ class TestStateInit(unittest.TestCase):
     Test State Init
     """
 
+    @classmethod
     def test_init(self):
         model = State()
         model.save()

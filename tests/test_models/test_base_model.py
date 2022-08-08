@@ -3,6 +3,7 @@
 """
 Unittest for base model
 """
+from curses import has_key
 from genericpath import exists
 import unittest
 
@@ -69,9 +70,27 @@ class TestBaseTDict(unittest.TestCase):
     Test class Method - to_dict
     """
 
-    def test_dict_dtype(self):
+    def test_to_dict_dtype(self):
         model = BaseModel()
         self.assertEqual(type(model.to_dict()), dict)
+
+    def test_to_dict_content(self):
+        model = BaseModel()
+        dct = model.to_dict()
+        self.assertTrue("id" in dct.keys())
+        self.assertTrue("created_at" in dct.keys())
+        self.assertTrue("updated_at" in dct.keys())
+        self.assertTrue("__class__" in dct.keys())
+
+    def test_to_dict_content_change(self):
+        model = BaseModel()
+        model.first_name = "hello"
+        dct = model.to_dict()
+        self.assertTrue("id" in dct.keys())
+        self.assertTrue("created_at" in dct.keys())
+        self.assertTrue("updated_at" in dct.keys())
+        self.assertTrue("__class__" in dct.keys())
+        self.assertTrue("first_name" in dct.keys())
 
     def test_docs(self):
         self.assertIsNotNone(BaseModel.to_dict.__doc__)

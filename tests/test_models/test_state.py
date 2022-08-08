@@ -31,3 +31,8 @@ class TestStateInit(unittest.TestCase):
 
     def test_docs(self):
         self.assertIsNotNone(State.__doc__)
+
+    def test_state_name(self):
+        model = State()
+        model.name = "test"
+        self.assertEqual("test", model.name)

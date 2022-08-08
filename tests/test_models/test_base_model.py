@@ -94,3 +94,13 @@ class TestBaseTDict(unittest.TestCase):
 
     def test_docs(self):
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
+
+
+class TestStr(unittest.TestCase):
+    """
+    Test method - __str__
+    """
+
+    def test_str_print(self):
+        out = BaseModel().__str__()
+        self.assertEqual("[BaseModel]", out[:11])

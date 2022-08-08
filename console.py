@@ -109,9 +109,9 @@ class HBNBCommand(cmd.Cmd):
         """Create new instance of BaseModel and prints the id"""
         line = line.strip()
         if not line:
-            print("** class name is missing **")
+            print("** class name missing **")
         elif line not in HBNBCommand.classes:
-            print("** class does not exist **")
+            print("** class doesn't exist **")
         else:
             for cls_name in HBNBCommand.classes:
                 if cls_name == line:
@@ -248,11 +248,11 @@ class HBNBCommand(cmd.Cmd):
         """Convert a line string to an argument tuplei"""
         return tuple(arg.split())
 
-    #########################################
-    # ##########Checking Default##############
-    #########################################
-    
-    # def default(self, line):
+        #########################################
+        # ##########Checking Default##############
+        #########################################
+
+        # def default(self, line):
         """
         print line
         """

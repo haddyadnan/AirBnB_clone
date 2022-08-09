@@ -17,6 +17,7 @@ class TestAmenityInit(unittest.TestCase):
 
     def test_init(self):
         model = Amenity()
+        model.save()
         self.assertIsInstance(model, Amenity)
 
     def test_inheritance(self):
@@ -24,10 +25,7 @@ class TestAmenityInit(unittest.TestCase):
         self.assertIsInstance(model, BaseModel)
 
     def test_args(self):
-        model = Amenity()
-        model.name = "home"
-        model.save()
-        self.assertFalse(hasattr(model, "home"))
+        self.assertEqual(Amenity.name, "")
 
     def test_docs(self):
         self.assertIsNotNone(Amenity.__doc__)

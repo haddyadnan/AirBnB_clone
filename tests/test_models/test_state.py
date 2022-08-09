@@ -17,22 +17,14 @@ class TestStateInit(unittest.TestCase):
 
     def test_init(self):
         model = State()
-        self.assertIsInstance(model, State)
-
-    def test_inheritance(self):
-        model = State()
-        self.assertIsInstance(model, BaseModel)
+        model.save()
 
     def test_args(self):
-        model = State()
-        model.name = "home"
-        model.save()
-        self.assertEqual(model.name, "home")
+        self.assertEqual(State.name, "")
 
     def test_docs(self):
         self.assertIsNotNone(State.__doc__)
 
-    def test_state_name(self):
-        model = State()
-        model.name = "test"
-        self.assertEqual("test", model.name)
+
+if __name__ == "__main__":
+    unittest.main()

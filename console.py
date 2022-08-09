@@ -206,7 +206,7 @@ class HBNBCommand(cmd.Cmd):
             ".all": self.do_all,
             ".destroy": self.do_destroy,
             ".update": self.do_update,
-            ".count": self.do_count
+            ".count": self.do_count,
         }
         if "(" and ")" in arg:
             arg_list = arg.split("(")
@@ -252,10 +252,10 @@ class HBNBCommand(cmd.Cmd):
         return tuple(arg.split())
 
     def do_count(self, class_name):
-        storage.reload()
+        self.__reload()  # storage.reload wont work unless all is called
         obj_count = 0
-        for obj_key in HBNBCommand.all_objs:
-            if class_name == obj_key.split(".")[0]:
+        for obj_key in HBNBCommand.all_objs.keys():
+            if class_name.strip(" ") == obj_key.split(".")[0]:
                 obj_count = obj_count + 1
         print(obj_count)
 
@@ -268,7 +268,7 @@ class HBNBCommand(cmd.Cmd):
         print line
         """
         """
-        # tmp = re.search(r"(^[^\.]*)", line).group(0)
+        # tmp = re.search(r"(^[^.]*)", line).group(0)
         if line.split(".")[0] in self.classes.keys():
 
             obj = line.split(".")[0]

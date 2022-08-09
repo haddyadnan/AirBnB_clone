@@ -27,7 +27,12 @@ class TestStateInit(unittest.TestCase):
         model = State()
         model.name = "home"
         model.save()
-        self.assertFalse(hasattr(model, "home"))
+        self.assertEqual(model.name, "home")
 
     def test_docs(self):
         self.assertIsNotNone(State.__doc__)
+
+    def test_state_name(self):
+        model = State()
+        model.name = "test"
+        self.assertEqual("test", model.name)

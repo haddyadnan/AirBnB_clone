@@ -248,11 +248,11 @@ class HBNBCommand(cmd.Cmd):
         """Convert a line string to an argument tuplei"""
         return tuple(arg.split())
 
-    #########################################
-    # ##########Checking Default##############
-    #########################################
-    
-    # def default(self, line):
+        #########################################
+        # ##########Checking Default##############
+        #########################################
+
+        # def default(self, line):
         """
         print line
         """

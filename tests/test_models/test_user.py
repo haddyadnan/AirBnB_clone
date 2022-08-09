@@ -58,3 +58,7 @@ class TestUserAttr(unittest.TestCase):
         user = User()
         user.last_name = "test"
         self.assertEqual("test", user.last_name)
+
+
+if __name__ == '__main__':
+    unittest.main()

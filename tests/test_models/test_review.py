@@ -16,6 +16,7 @@ class TestReviewInit(unittest.TestCase):
 
     def test_init(self):
         model = Review()
+        model.save()
         self.assertIsInstance(model, Review)
 
     def test_inheritance(self):
@@ -23,14 +24,10 @@ class TestReviewInit(unittest.TestCase):
         self.assertIsInstance(model, BaseModel)
 
     def test_review_attr(self):
-        model = Review()
-        model.place_id = "id"
-        model.user_id = "user"
-        model.text = "text"
 
-        self.assertEqual("id", model.place_id)
-        self.assertEqual("user", model.user_id)
-        self.assertEqual("text", model.text)
+        self.assertEqual("", Review.place_id)
+        self.assertEqual("", Review.user_id)
+        self.assertEqual("", Review.text)
 
     def test_docs(self):
         self.assertIsNotNone(Review.__doc__)

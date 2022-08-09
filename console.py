@@ -259,11 +259,11 @@ class HBNBCommand(cmd.Cmd):
                 obj_count = obj_count + 1
         print(obj_count)
 
-    #########################################
-    # ##########Checking Default##############
-    #########################################
-    
-    # def default(self, line):
+        #########################################
+        # ##########Checking Default##############
+        #########################################
+
+        # def default(self, line):
         """
         print line
         """

@@ -17,6 +17,7 @@ class TestUserInit(unittest.TestCase):
 
     def test_init(self):
         model = City()
+        model.save()
         self.assertIsInstance(model, City)
 
     def test_inheritance(self):
@@ -24,10 +25,8 @@ class TestUserInit(unittest.TestCase):
         self.assertIsInstance(model, BaseModel)
 
     def test_args(self):
-        model = City()
-        model.name = "home"
-        model.save()
-        self.assertFalse(hasattr(model, "home"))
+        self.assertEqual(City.state_id, "")
+        self.assertEqual(City.name, "")
 
     def test_docs(self):
         self.assertIsNotNone(City.__doc__)

@@ -206,11 +206,14 @@ class HBNBCommand(cmd.Cmd):
             ".all": self.do_all,
             ".destroy": self.do_destroy,
             ".update": self.do_update,
+            ".count": self.do_count
         }
         if "(" and ")" in arg:
             arg_list = arg.split("(")
         else:
             return
+        for each in arg_list:
+            pass
         new_arg = "{} {}".format(command, arg_list[1][:-1])
         for k, func in cmds.items():
             if k == arg_list[0]:
@@ -247,6 +250,14 @@ class HBNBCommand(cmd.Cmd):
     def args(self, arg):
         """Convert a line string to an argument tuplei"""
         return tuple(arg.split())
+
+    def do_count(self, class_name):
+        storage.reload()
+        obj_count = 0
+        for obj_key in HBNBCommand.all_objs:
+            if class_name == obj_key.split(".")[0]:
+                obj_count = obj_count + 1
+        print(obj_count)
 
     #########################################
     # ##########Checking Default##############

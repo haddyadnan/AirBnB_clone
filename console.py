@@ -210,6 +210,8 @@ class HBNBCommand(cmd.Cmd):
         }
         if "(" and ")" in arg:
             arg_list = arg.split("(")
+            arg_list = arg_list.strip(",")
+            arg_list = arg_list.strip('"')
         else:
             return
         for each in arg_list:

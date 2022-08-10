@@ -214,9 +214,11 @@ class HBNBCommand(cmd.Cmd):
             # arg_list = arg_list.strip('"')
         else:
             return
-        new_arg = arg_list[1][:-1].split()
-        new_arg = new_arg.strip(',')
+        new_arg = arg_list[1][:-1]
+        new_arg = new_arg.replace(',', '')
+        # print(new_arg)
         new_arg = new_arg.replace('"', '')
+        # print(new_arg)
         new_arg = "{} {}".format(command, new_arg)
         for k, func in cmds.items():
             if k == arg_list[0]:

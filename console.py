@@ -201,8 +201,6 @@ class HBNBCommand(cmd.Cmd):
             # for k, v in update_dict.items():
                 # update_dict[k] = v.strip('"')
                 # Update_dict[k] = self.__parse_type(v)
-            print("in console")
-            print(update_dict)
             obj.attr_update(update_dict)
         else:
             val = arguments[3].strip('"')
@@ -226,8 +224,6 @@ class HBNBCommand(cmd.Cmd):
             return
         new_arg = arg_list[1][:-1]
         if '{' and '}' in new_arg and arg_list[0] == '.update':
-            print("---in __parse_cmd----")
-            print('{} {}'.format(class_name, new_arg))
             cmds[arg_list[0]]('{} {}'.format(class_name, new_arg))
             """
             dict_str = new_arg.split('{')
@@ -283,8 +279,6 @@ class HBNBCommand(cmd.Cmd):
             arg = arg.replace(',', '')
             arg = arg.replace('"', '')
             dict_str = '{}{}'.format('{', dict_str[1])
-            print("----in args----")
-            print([class_name, arg, dict_str])
             return tuple([class_name, arg, dict_str])
         else:
             return tuple(arg.split())

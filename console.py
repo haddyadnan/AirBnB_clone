@@ -214,9 +214,10 @@ class HBNBCommand(cmd.Cmd):
             # arg_list = arg_list.strip('"')
         else:
             return
-        for each in arg_list:
-            pass
-        new_arg = "{} {}".format(command, arg_list[1][:-1])
+        temp = arg_list[1][:-1].split()
+        for i, each in enumerate(temp):
+            temp[i] = each.strip(',')
+        new_arg = "{} {} {} {}".format(command, temp[0], temp[1], temp[2])
         for k, func in cmds.items():
             if k == arg_list[0]:
                 func(new_arg)

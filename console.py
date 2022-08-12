@@ -50,7 +50,9 @@ class HBNBCommand(cmd.Cmd):
         if not self.__check_id(arg):
             return False
         if len(arg) > 2:
-            if len(arg) > 3:
+            if '{' and '}' in arg[2]:
+                return True
+            elif len(arg) > 3:
                 return True
             else:
                 print(HBNBCommand.err_msg[5])
@@ -193,13 +195,21 @@ class HBNBCommand(cmd.Cmd):
         if not self.__check_attr(arguments):
             return
         obj = HBNBCommand.all_objs["{}.{}".format(arguments[0], arguments[1])]
-        val = arguments[3].strip('"')
-        val = self.__parse_type(val)
-        obj.attr_update({arguments[2]: val})
+        print(arguments[2])
+        if '{' and '}' in arguments[2]:
+            update_dict = eval(arguments[2])
+            # for k, v in update_dict.items():
+                # update_dict[k] = v.strip('"')
+                # Update_dict[k] = self.__parse_type(v)
+            obj.attr_update(update_dict)
+        else:
+            val = arguments[3].strip('"')
+            val = self.__parse_type(val)
+            obj.attr_update({arguments[2]: val})
 
         # Basically: object -> dict -> object -> save_object
 
-    def __parse_cmd(self, command, arg):
+    def __parse_cmd(self, class_name, arg):
         cmds = {
             ".create": self.do_create,
             ".show": self.do_show,
@@ -212,12 +222,24 @@ class HBNBCommand(cmd.Cmd):
             arg_list = arg.split("(")
         else:
             return
-        for each in arg_list:
-            pass
-        new_arg = "{} {}".format(command, arg_list[1][:-1])
-        for k, func in cmds.items():
-            if k == arg_list[0]:
-                func(new_arg)
+        new_arg = arg_list[1][:-1]
+        if '{' and '}' in new_arg and arg_list[0] == '.update':
+            cmds[arg_list[0]]('{} {}'.format(class_name, new_arg))
+            """
+            dict_str = new_arg.split('{')
+            new_arg = dict_str[0]
+            new_arg = new_arg.replace(',', '')
+            new_arg = new_arg.replace('"', '')
+            dict_str = '{}{}'.format('{', dict_str[1])
+            new_arg = new_arg + dict_str
+            """
+        else:
+            new_arg = new_arg.replace(',', '')
+            new_arg = new_arg.replace('"', '')
+            new_arg = "{} {}".format(class_name, new_arg)
+            for k, func in cmds.items():
+                if k == arg_list[0]:
+                    func(new_arg)
 
     def do_BaseModel(self, arg):
         """Usage: BaseModel.<command>"""
@@ -249,7 +271,17 @@ class HBNBCommand(cmd.Cmd):
 
     def args(self, arg):
         """Convert a line string to an argument tuplei"""
-        return tuple(arg.split())
+        if '{' and '}' in arg:
+            dict_str = arg.split("{")
+            class_name = dict_str[0].split()
+            arg = class_name[1]
+            class_name = class_name[0]
+            arg = arg.replace(',', '')
+            arg = arg.replace('"', '')
+            dict_str = '{}{}'.format('{', dict_str[1])
+            return tuple([class_name, arg, dict_str])
+        else:
+            return tuple(arg.split())
 
     def do_count(self, class_name):
         self.__reload()  # storage.reload wont work unless all is called

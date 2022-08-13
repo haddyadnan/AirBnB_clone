@@ -108,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, line):
-        """Create new instance of BaseModel and prints the id"""
+        """Create new instance of model and prints the id"""
         line = line.strip()
         if not line:
             print("** class name missing **")

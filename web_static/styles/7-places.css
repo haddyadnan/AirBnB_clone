@@ -30,14 +30,15 @@
 .place-list {
     display: flex;
     justify-content: center;
-    flex-direction: row;
-    /* flex-wrap: wrap; */
+
+    flex-wrap: wrap;
 }
 
 /* .place-list .col-1 {
     border: 1px dashed red;
 }*/
-
-.place-list .center-article {
-    border: 1px solid black;
+.central-article {
+    display: flex;
+    flex-wrap: wrap;
+    align-self: center;
 }
